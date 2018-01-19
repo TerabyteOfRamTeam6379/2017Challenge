@@ -21,7 +21,13 @@ public class Robot extends IterativeRobot {
 	Joystick leftStick = new Joystick(0); // set to ID 1 in DriverStation
 	Button button1 = new JoystickButton(leftStick, 1);
 	Timer timer = new Timer();
+	
 	CameraServer server;
+	
+	private double throttleValue() {
+		leftStick.getRawAxis(5);
+		return 0;
+	}
 	
 	public Robot() {
 		myRobot.setExpiration(0.1);
@@ -74,16 +80,18 @@ public class Robot extends IterativeRobot {
 		if (leftStick.getRawButton(1)){
 			myRobot.setSafetyEnabled(true);
 			myRobot.arcadeDrive(leftStick);
-			myRobot.arcadeDrive(-leftStick.getY(), -leftStick.getZ()*.5, true); // gets and inverts joystick input, and cuts power to motors by 1/2
+			myRobot.arcadeDrive(throttleValue(), -leftStick.getZ()*.5, true); // gets and inverts joystick input, and cuts power to motors by 1/2
 			Timer.delay(0.005); // wait for a motor update time
 		}
 		else {
 			myRobot.setSafetyEnabled(true);
 			myRobot.arcadeDrive(leftStick);
-			myRobot.arcadeDrive(-leftStick.getY(), -leftStick.getX(), true); // gets and inverts joystick input, and cuts power to motors by 1/2
+			myRobot.arcadeDrive(throttleValue(), -leftStick.getX(), true); // gets and inverts joystick input, and cuts power to motors by 1/2
 			Timer.delay(0.005); // wait for a motor update time
 			}
 		}
+
+
 
 
 	/**
